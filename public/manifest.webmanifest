@@ -1,9 +1,9 @@
 {
-  "name": "Pocket Barista",
-  "short_name": "Barista",
+  "name": "A Minor Inconvenience — Pocket Barista",
+  "short_name": "Pocket Barista",
   "start_url": "/Pocket_Barista/",
   "display": "standalone",
-  "background_color": "#f5efe7",
-  "theme_color": "#2b1d17",
-  "description": "Your personal coffee recipe book, brew calculator and timer."
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "description": "A premium coffee recipe book, brew calculator and timer."
 }
