@@ -1,6 +1,7 @@
 name: Minimal Home
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 permissions:
   contents: write
 jobs:
@@ -23,5 +24,4 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add src/main.js
-          git commit -m 'Simplify home to two brew actions'
-          git push
+          git diff --cached --quiet || (git commit -m 'Simplify home to two brew actions' && git push)
