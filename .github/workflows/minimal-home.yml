@@ -1,0 +1,27 @@
+name: Minimal Home
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove extra home content
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('src/main.js')
+          s=p.read_text()
+          start=s.index('function homePage(){')
+          end=s.index('\n\nfunction pourPage()', start)
+          new="""function homePage(){return `<section class=\"dashboard-head\"><div><div class=\"eyebrow\">COFFEE CONTROL / 01</div><h1>Good coffee.<br><em>Precisely made.</em></h1><p>Choose your brew.</p></div><div class=\"status-chip\"><i></i> SYSTEM READY</div></section>\n<section class=\"command-grid\">\n <button class=\"command-card hero-command\" data-page=\"pour\"><div class=\"command-icon pour-icon\">◒</div><div class=\"command-copy\"><span>METHOD 01</span><h2>Pour Over</h2><p>Guided brewing</p></div><b>→</b></button>\n <button class=\"command-card\" data-page=\"espresso\"><div class=\"command-icon\">◉</div><div class=\"command-copy\"><span>METHOD 02</span><h2>Espresso</h2><p>Shot timer</p></div><b>→</b></button>\n</section>`}"""
+          p.write_text(s[:start]+new+s[end:])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/main.js
+          git commit -m 'Simplify home to two brew actions'
+          git push
