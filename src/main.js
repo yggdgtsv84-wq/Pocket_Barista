@@ -29,10 +29,10 @@ function render(){
  bind();
 }
 
-function homePage(){return `<section class="dashboard-head"><div><div class="eyebrow">COFFEE CONTROL / 01</div><h1>Good coffee.<br><em>Precisely made.</em></h1><p>Choose your brew.</p></div><div class="status-chip"><i></i> SYSTEM READY</div></section>
+function homePage(){return `<section class="dashboard-head"><div><h1>Good coffee.<br><em>Precisely made.</em></h1></div><div class="status-chip"><i></i> SYSTEM READY</div></section>
 <section class="command-grid">
- <button class="command-card hero-command" data-page="pour"><div class="command-icon pour-icon">◒</div><div class="command-copy"><span>METHOD 01</span><h2>Pour Over</h2><p>Guided brewing</p></div><b>→</b></button>
- <button class="command-card" data-page="espresso"><div class="command-icon">◉</div><div class="command-copy"><span>METHOD 02</span><h2>Espresso</h2><p>Shot timer</p></div><b>→</b></button>
+ <button class="command-card hero-command" data-page="pour"><div class="command-icon pour-icon">◒</div><div class="command-copy"><h2>Pour Over</h2></div><b>→</b></button>
+ <button class="command-card" data-page="espresso"><div class="command-icon">◉</div><div class="command-copy"><h2>Espresso</h2></div><b>→</b></button>
 </section>`}
 
 function pourPage(){return `<section class="page-head"><button class="back-btn" data-page="home">← Dashboard</button><div class="eyebrow">METHOD 01 / POUR OVER</div><h1>Dial in the pour.</h1><p>Choose a proven recipe. Pocket Barista becomes your brewing co-pilot.</p></section>
