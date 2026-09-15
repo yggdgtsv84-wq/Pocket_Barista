@@ -18,3 +18,37 @@
   .command-icon{right:11px;bottom:10px;width:34px;height:34px;font-size:15px}
   .pour-icon{width:40px;height:40px;font-size:19px}
 }
+
+/* Final compact portrait home layout */
+@media (max-width:720px) and (orientation:portrait){
+  .topbar{height:58px;padding:0 14px}
+  .menu-btn,.profile-btn{width:36px;height:36px}
+  .brand-mark{width:25px;height:25px}
+  .brand-mark:before{width:9px;height:9px}
+  .brand-title{font-size:12px}
+  main{padding:0 12px 32px}
+  .dashboard-head{padding:22px 2px 16px;gap:10px;flex-direction:row;align-items:flex-end}
+  .dashboard-head h1{font-size:38px;line-height:.9;margin:4px 0 0}
+  .status-chip{font-size:7px;padding:7px 9px;align-self:flex-end}
+  .command-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:10px}
+  .command-card,.hero-command{min-height:0!important;height:118px!important;padding:13px!important;border-radius:14px}
+  .command-copy h2{font-size:19px;margin:0;line-height:1}
+  .command-copy p{display:none}
+  .command-card>b{right:10px;top:9px;font-size:13px}
+  .command-icon{right:10px;bottom:9px;width:34px;height:34px;font-size:15px}
+  .pour-icon{width:40px;height:40px;font-size:19px}
+}
+@media (max-width:390px) and (orientation:portrait){
+  .topbar{height:54px}
+  .brand-title{font-size:11px}
+  main{padding-left:10px;padding-right:10px}
+  .dashboard-head{padding-top:17px;padding-bottom:13px}
+  .dashboard-head h1{font-size:33px}
+  .status-chip{font-size:6px;padding:6px 7px}
+  .command-grid{gap:6px}
+  .command-card,.hero-command{height:108px!important;padding:11px!important;border-radius:13px}
+  .command-copy h2{font-size:17px}
+  .command-card>b{right:9px;top:8px;font-size:12px}
+  .command-icon{right:9px;bottom:8px;width:30px;height:30px;font-size:13px}
+  .pour-icon{width:36px;height:36px;font-size:17px}
+}
