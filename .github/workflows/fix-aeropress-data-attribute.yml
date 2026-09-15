@@ -1,0 +1,75 @@
+name: Fix AeroPress data attribute
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-aeropress-data-attribute.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch AeroPress handler
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/main.js')
+          s = p.read_text()
+          old = '''function bindMethodCards(){
+ document.querySelectorAll('[data-method-brew]').forEach(btn=>{
+  if(btn.dataset.method==='aero')return;
+  btn.addEventListener('click',e=>{
+   e.preventDefault();
+   e.stopPropagation();
+   const card=btn.closest('[data-recipe-card]');
+   const scale=Number(card?.querySelector('.method-scale input')?.value||1);
+   startMethodRecipe(btn.dataset.method,btn.dataset.recipeId,scale);
+  });
+ });
+}
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('[data-method-brew][data-method="aero"]');
+ if(!btn)return;
+ e.preventDefault();
+ e.stopImmediatePropagation();
+ const card=btn.closest('[data-recipe-card]');
+ const scale=Number(card?.querySelector('.method-scale input')?.value||1);
+ startMethodRecipe('aero',btn.dataset.recipeId,scale);
+},true);'''
+          new = '''function bindMethodCards(){
+ document.querySelectorAll('[data-method-brew]').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+   e.preventDefault();
+   e.stopPropagation();
+   const card=btn.closest('[data-recipe-card]');
+   const kind=btn.dataset.methodBrew;
+   const scale=Number(card?.querySelector('.method-scale input')?.value||1);
+   startMethodRecipe(kind,btn.dataset.recipeId,scale);
+  });
+ });
+}'''
+          if old not in s:
+              raise SystemExit('Expected broken handler block not found')
+          p.write_text(s.replace(old,new,1))
+          PY
+          grep -n "dataset.methodBrew" src/main.js
+          npm install
+          npm run build
+          git diff -- src/main.js
+      - name: Commit source fix and remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main.js .github/workflows/fix-aeropress-data-attribute.yml
+          git commit -m "Fix AeroPress brew data attribute"
+          git rm .github/workflows/fix-aeropress-data-attribute.yml
+          git commit -m "Remove one-shot AeroPress data fix"
+          git push origin HEAD:main
