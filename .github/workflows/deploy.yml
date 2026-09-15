@@ -20,10 +20,14 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           s=Path('src/main.js').read_text()
-          for needle in ['function renderGuide','state.guide.elapsed','setInterval']:
-              i=s.find(needle)
-              print(f'--- {needle} @ {i} ---')
-              print(s[max(0,i-700):i+1800] if i >= 0 else 'NOT FOUND')
+          for needle in ['function beep','beep()','g.step','g.interval','guideToggle']:
+              print(f'--- {needle} ---')
+              pos=0
+              for _ in range(8):
+                  i=s.find(needle,pos)
+                  if i<0: break
+                  print(f'@ {i}: {s[max(0,i-500):i+900]}')
+                  pos=i+len(needle)
           PY
       - name: Repair AeroPress recipe markup
         run: sed -i 's/data-method-brew="${kind}"/data-method-brew="${kind}" data-method="${kind}"/' src/main.js
