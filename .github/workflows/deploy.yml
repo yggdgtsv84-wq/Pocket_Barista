@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,30 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add championship V60 recipes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('src/main.js')
-          s = p.read_text()
-          if 'perger-wbrc-2012' in s:
-              raise SystemExit(0)
-          marker = "\n];\n\nconst state="
-          champions = r''' {id:'perger-wbrc-2012',name:'Fast Extraction V60',creator:'Matt Perger',badge:'WBrC 2012',method:'Pour Over',coffee_g:12,water_g:200,ratio:16.7,grind:'Fine',temperature_c:97,brew_seconds:140,notes:'Fine grind, stirred bloom and two-count pours for high extraction.',sourceUrl:'https://gota.cafe/en/recipes/v60-02/matt-perger-v60',steps:[['Bloom',14,'Pour 50g in a spiral.','50g','Saturate quickly.'],['Bloom stir',30,'Gently stir until all grounds are wet.','50g','Reach the edges and bottom.'],['Second pour',60,'Pour in a spiral to 100g.','100g','Keep the stream moving.'],['Final pour',85,'Pour in a spiral to 200g.','200g','Avoid dry coffee above the slurry.'],['Set the bed',90,'Tap the brewer gently to flatten the bed.','—','Keep agitation controlled.'],['Drawdown',140,'Let the brew drain completely.','—','Aim for about 2:20.']]},
- {id:'domatiotis-wbrc-2014',name:'Stefanos Domatiotis V60',creator:'Stefanos Domatiotis',badge:'WBrC 2014',method:'Pour Over',coffee_g:15,water_g:250,ratio:16.7,grind:'Medium-fine',temperature_c:93,brew_seconds:165,notes:'Controlled circular pours followed by a fine centre stream.',sourceUrl:'https://www.cup-timer.com/es/recipe/stefanos-domatiotis-wbrc-2014',steps:[['Bloom',30,'Pour to 40g and let bloom.','40g','Keep the bed evenly saturated.'],['Second pour',45,'Pour to 110g with controlled circles.','110g','Keep the bed level.'],['Third pour',65,'Pour to 150g.','150g','Maintain a steady circular pattern.'],['Final pour',125,'Pour to 250g with a fine stream aimed at the centre.','250g','Finish gently.'],['Drawdown',165,'Let the coffee drain.','—','Aim for about 2:45.']]},
- {id:'odd-steinar-wbrc-2015',name:'Odd-Steinar 3× Bloom V60',creator:'Odd-Steinar Tøllefsen',badge:'WBrC 2015',method:'Pour Over',coffee_g:20,water_g:300,ratio:15,grind:'Coarse',temperature_c:93,brew_seconds:210,notes:'Large bloom followed by two gentle spiral pours.',sourceUrl:'https://www.cup-timer.com/en/recipe/odd-steinar-tollefsen-wbrc-2015-3x-bloom',steps:[['Bloom',45,'Pour 60g and saturate evenly.','60g','Give the coffee a full 45-second bloom.'],['First pour',90,'Spiral pour to 180g.','180g','Pour gently and evenly.'],['Second pour',135,'Spiral pour to 300g.','300g','Keep agitation soft.'],['Drawdown',210,'Let the bed drain completely.','—','Aim for about 3:30.']]},
- {id:'kasuya-46',name:'4:6 Method',creator:'Tetsu Kasuya',badge:'WBrC 2016',method:'Pour Over',coffee_g:20,water_g:300,ratio:15,grind:'Coarse',temperature_c:92,brew_seconds:210,notes:'Five pours: the first 40% tunes flavour balance; the final 60% sets strength.',sourceUrl:'https://www.hario.co.uk/blogs/hario-ambassadors/hario-v60-recipe-interview-with-hario-ambassador-tetsu-kasuya',steps:[['First pour',45,'Pour 50g.','50g','Smaller first pour leans sweeter.'],['Second pour',90,'Pour to 120g total.','120g','The first 40% sets acidity vs sweetness.'],['Third pour',130,'Pour to 180g total.','180g','Begin the strength phase.'],['Fourth pour',160,'Pour to 240g total.','240g','Keep each pour controlled.'],['Final pour',170,'Pour to 300g total.','300g','Finish the five-pour sequence.'],['Drawdown',210,'Let the bed drain.','—','Aim for about 3:30.']]},
- {id:'chad-wang-wbrc-2017',name:'Centre Pour V60',creator:'Chad Wang',badge:'WBrC 2017',method:'Pour Over',coffee_g:15,water_g:250,ratio:16.7,grind:'Fine',temperature_c:92,brew_seconds:120,notes:'30-second bloom followed by one continuous centre pour.',sourceUrl:'https://sprudge.com/6-recipes-from-the-2017-world-brewers-cup-123165.html',steps:[['Bloom',30,'Pour 30g and let bloom.','30g','Use a ceramic V60 if available.'],['Centre pour',75,'Pour directly in the centre to 250g total.','250g','Avoid circles. Keep the stream controlled.'],['Drawdown',120,'Let the brew finish.','—','Aim for about 2:00 total.']]}'''
-          if marker not in s:
-              raise SystemExit('recipe marker not found')
-          s = s.replace(marker, ',\n' + champions + marker, 1)
-          p.write_text(s)
-          PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/main.js
-          git commit -m "Add championship V60 recipes" || true
-          git push
       - uses: actions/setup-node@v4
         with:
           node-version: 22
