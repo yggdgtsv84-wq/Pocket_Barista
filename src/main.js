@@ -30,7 +30,7 @@ const S=[
  {id:'switch-kasuya-devil',name:'Tetsu Kasuya Devil Switch',creator:'Tetsu Kasuya',badge:'Hybrid classic',method:'V60 Switch',coffee_g:20,water_g:280,ratio:14,grind:'Medium-fine',temperature_c:90,brew_seconds:180,notes:'Hot open-valve extraction followed by cooler immersion, then release.',sourceUrl:'https://www.timer.coffee/recipes/hario-switch/tetsu-kasuya-devil-recipe-for-hario-switch/',steps:[['First pour',30,'Open the switch and pour 60g hot water.','60g','Use about 90°C water.'],['Second pour',70,'Pour to 120g total.','120g','Keep the valve open.'],['Cool water',75,'Close the switch and bring water temperature down toward 70°C.','120g','Prepare the cooler immersion phase.'],['Immersion fill',90,'Pour to 280g total with cooler water.','280g','Keep the switch closed.'],['Release',105,'Open the switch and let the brew drain.','—','Target 3:00 total.']]}
 ];
 
-function methodPage(kind,title,eyebrow,intro,recipes){return `<section class="page-head"><button class="back-btn" data-page="home">← Dashboard</button><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${intro}</p></section><section class="recipe-deck">${recipes.map((r,i)=>`<article class="recipe-panel" data-recipe-card="${r.id}"><div class="recipe-index">${String(i+1).padStart(2,'0')}</div><div class="recipe-main"><div class="recipe-line"><span class="recipe-badge">${esc(r.badge)}</span><span>${esc(r.creator)}</span></div><h2>${esc(r.name)}</h2><p>${esc(r.notes)}</p><div class="specs"><span><b>${r.coffee_g}g</b> coffee</span><span><b>${r.water_g}g</b> water</span><span><b>1:${r.ratio}</b> ratio</span><span><b>${r.temperature_c}°</b> water</span><span><b>${fmt(r.brew_seconds)}</b> target</span></div><div class="recipe-buttons"><button class="primary" data-method-brew="${kind}" data-recipe-id="${r.id}">Brew</button>${r.sourceUrl?`<a class="source-link" href="${r.sourceUrl}" target="_blank" rel="noreferrer">Source ↗</a>`:''}</div></div></article>`).join('')}</section>`}
+function methodPage(kind,title,eyebrow,intro,recipes){return `<section class="page-head"><button class="back-btn" data-page="home">← Dashboard</button><div class="eyebrow">${eyebrow}</div><h1>${title}</h1><p>${intro}</p></section><section class="recipe-deck">${recipes.map((r,i)=>`<article class="recipe-panel" data-recipe-card="${r.id}"><div class="recipe-index">${String(i+1).padStart(2,'0')}</div><div class="recipe-main"><div class="recipe-line"><span class="recipe-badge">${esc(r.badge)}</span><span>${esc(r.creator)}</span></div><h2>${esc(r.name)}</h2><p>${esc(r.notes)}</p><div class="specs"><span><b>${r.coffee_g}g</b> coffee</span><span><b>${r.water_g}g</b> water</span><span><b>1:${r.ratio}</b> ratio</span><span><b>${r.temperature_c}°</b> water</span><span><b>${fmt(r.brew_seconds)}</b> target</span></div><div class="recipe-buttons"><button type="button" class="primary" data-method-brew="${kind}" data-recipe-id="${r.id}">Brew</button>${r.sourceUrl?`<a class="source-link" href="${r.sourceUrl}" target="_blank" rel="noreferrer">Source ↗</a>`:''}</div></div></article>`).join('')}</section>`}
 
 function aeroPage(){return methodPage('aero','AeroPress','METHOD 02 / AEROPRESS','World AeroPress Championship recipes, tuned for a repeatable guided brew.',A)}
 function switchPage(){return methodPage('switch','V60 Switch','METHOD 03 / V60 SWITCH','Famous hybrid and immersion recipes for the Hario Switch.',S)}
@@ -125,3 +125,12 @@ async function auth(up){const email=document.querySelector('#email').value.trim(
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 async function init(){render();if(!supabase)return;const {data}=await supabase.auth.getSession();state.user=data.session?.user||null;render();await loadRecipes();supabase.auth.onAuthStateChange(async(_,s)=>{state.user=s?.user||null;render();await loadRecipes()})}
 init();state.guideLoop=setInterval(tickGuide,100);if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/Pocket_Barista/sw.js').catch(()=>{}));
+
+
+document.addEventListener("click", e => {
+  const btn=e.target.closest("[data-method-brew]");
+  if(!btn)return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  startMethodRecipe(btn.dataset.method,btn.dataset.recipeId);
+}, true);
