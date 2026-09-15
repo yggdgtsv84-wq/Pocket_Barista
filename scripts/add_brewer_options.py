@@ -5,6 +5,14 @@ import subprocess
 p=Path('src/main.js')
 s=p.read_text()
 if 'aeropress-champion-2025' in s:
+    fixed=s.replace('</section>}\n\nfunction pourPage', '</section>`}\n\nfunction pourPage', 1)
+    if fixed!=s:
+        p.write_text(fixed)
+        subprocess.run(['git','config','user.name','Pocket Barista Bot'],check=True)
+        subprocess.run(['git','config','user.email','actions@github.com'],check=True)
+        subprocess.run(['git','add','src/main.js'],check=True)
+        subprocess.run(['git','commit','-m','Repair brewer home page template'],check=False)
+        subprocess.run(['git','push'],check=True)
     raise SystemExit(0)
 marker='\n\nconst state='
 insert=r'''
