@@ -134,10 +134,3 @@ async function init(){render();if(!supabase)return;const {data}=await supabase.a
 init();state.guideLoop=setInterval(tickGuide,100);if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/Pocket_Barista/sw.js').catch(()=>{}));
 
 
-document.addEventListener("click", e => {
-  const btn=e.target.closest("[data-method-brew]");
-  if(!btn)return;
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  startMethodRecipe(btn.dataset.method,btn.dataset.recipeId);
-}, true);
