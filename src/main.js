@@ -36,14 +36,26 @@ function aeroPage(){return methodPage('aero','AeroPress','METHOD 02 / AEROPRESS'
 function switchPage(){return methodPage('switch','V60 Switch','METHOD 03 / V60 SWITCH','Famous hybrid and immersion recipes for the Hario Switch.',S)}
 
 function bindMethodCards(){
- document.querySelectorAll('[data-method-brew]').forEach(btn=>btn.addEventListener('click',e=>{
-  e.preventDefault();
-  e.stopPropagation();
-  const card=btn.closest('[data-recipe-card]');
-  const scale=Number(card?.querySelector('.method-scale input')?.value||1);
-  startMethodRecipe(btn.dataset.method,btn.dataset.recipeId,scale);
- }));
+ document.querySelectorAll('[data-method-brew]').forEach(btn=>{
+  if(btn.dataset.method==='aero')return;
+  btn.addEventListener('click',e=>{
+   e.preventDefault();
+   e.stopPropagation();
+   const card=btn.closest('[data-recipe-card]');
+   const scale=Number(card?.querySelector('.method-scale input')?.value||1);
+   startMethodRecipe(btn.dataset.method,btn.dataset.recipeId,scale);
+  });
+ });
 }
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('[data-method-brew][data-method="aero"]');
+ if(!btn)return;
+ e.preventDefault();
+ e.stopImmediatePropagation();
+ const card=btn.closest('[data-recipe-card]');
+ const scale=Number(card?.querySelector('.method-scale input')?.value||1);
+ startMethodRecipe('aero',btn.dataset.recipeId,scale);
+},true);
 function startMethodRecipe(kind,id,scale=1){
  const base=(kind==='aero'?A:S).find(x=>x.id===id);if(!base)return;
  stopGuide();
