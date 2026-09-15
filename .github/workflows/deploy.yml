@@ -40,6 +40,19 @@ jobs:
           PY
       - name: Repair AeroPress recipe markup
         run: sed -i 's/data-method-brew="${kind}"/data-method-brew="${kind}" data-method="${kind}"/' src/main.js
+      - name: Add AeroPress and V60 Switch to hamburger menu
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('src/main.js')
+          s=p.read_text()
+          old='<button class="drawer-item" data-menu-page="espresso"><b>03</b><span>Espresso shot timer</span><i>→</i></button><div class="drawer-label">LIBRARY</div><button class="drawer-item" id="drawerSaved"><b>04</b><span>My coffee book</span><i>→</i></button>'
+          new='<button class="drawer-item" data-menu-page="espresso"><b>03</b><span>Espresso shot timer</span><i>→</i></button><button class="drawer-item" data-menu-page="aero"><b>04</b><span>AeroPress</span><i>→</i></button><button class="drawer-item" data-menu-page="switch"><b>05</b><span>V60 Switch</span><i>→</i></button><div class="drawer-label">LIBRARY</div><button class="drawer-item" id="drawerSaved"><b>06</b><span>My coffee book</span><i>→</i></button>'
+          if old not in s:
+              raise SystemExit('Expected hamburger menu pattern not found')
+          p.write_text(s.replace(old,new,1))
+          print('Hamburger menu updated: AeroPress and V60 Switch added.')
+          PY
       - uses: actions/setup-node@v4
         with:
           node-version: 22
