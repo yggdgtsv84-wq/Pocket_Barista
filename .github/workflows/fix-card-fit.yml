@@ -1,0 +1,38 @@
+name: Fix card image fit
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adjust portrait card sizing and image fit
+        run: |
+          cat >> src/style.css <<'EOF'
+
+          /* Final portrait card/image fit */
+          @media (max-width:720px) and (orientation:portrait){
+            .command-card,.hero-command{height:146px!important;min-height:146px!important}
+            .command-card:before,.command-card:after{background-size:cover!important}
+            .hero-command:before{background-position:center 53%!important}
+            .command-card[data-page="aero"]:before{background-position:center center!important}
+            .command-card.switch-command:before{background-position:center center!important}
+          }
+          @media (max-width:390px) and (orientation:portrait){
+            .command-card,.hero-command{height:132px!important;min-height:132px!important}
+          }
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/style.css
+          git commit -m "Fit home card images on portrait phones"
+          git push
+      - name: Remove temporary workflow
+        run: |
+          rm .github/workflows/fix-card-fit.yml
+          git add .github/workflows/fix-card-fit.yml
+          git commit -m "Remove temporary card fit workflow"
+          git push
