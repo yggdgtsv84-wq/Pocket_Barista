@@ -52,3 +52,15 @@
   .command-icon{right:9px;bottom:8px;width:30px;height:30px;font-size:13px}
   .pour-icon{width:36px;height:36px;font-size:17px}
 }
+
+/* Final portrait card/image fit */
+@media (max-width:720px) and (orientation:portrait){
+  .command-card,.hero-command{height:146px!important;min-height:146px!important}
+  .command-card:before,.command-card:after{background-size:cover!important}
+  .hero-command:before{background-position:center 53%!important}
+  .command-card[data-page="aero"]:before{background-position:center center!important}
+  .command-card.switch-command:before{background-position:center center!important}
+}
+@media (max-width:390px) and (orientation:portrait){
+  .command-card,.hero-command{height:132px!important;min-height:132px!important}
+}
