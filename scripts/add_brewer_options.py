@@ -1,5 +1,6 @@
 from pathlib import Path
 import re
+import subprocess
 
 p=Path('src/main.js')
 s=p.read_text()
@@ -47,3 +48,8 @@ s,count=home.subn(replacement,s,count=1)
 if count!=1: raise SystemExit('homePage regex failed')
 s=s.replace('bind();\n}','bind();bindMethodCards();\n}',1)
 p.write_text(s)
+subprocess.run(['git','config','user.name','Pocket Barista Bot'],check=True)
+subprocess.run(['git','config','user.email','actions@github.com'],check=True)
+subprocess.run(['git','add','src/main.js'],check=True)
+subprocess.run(['git','commit','-m','Persist AeroPress and V60 Switch options'],check=False)
+subprocess.run(['git','push'],check=True)
