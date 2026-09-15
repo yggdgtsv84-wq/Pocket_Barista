@@ -1,0 +1,15 @@
+/* Home command cards: true square tiles. */
+.command-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+.command-grid .command-card{width:100%;height:auto;min-height:0;aspect-ratio:1 / 1;}
+.command-grid .command-card.hero-command{height:auto;min-height:0;aspect-ratio:1 / 1;}
+.command-grid .command-card:before{inset:0;right:auto;top:auto;width:auto;height:auto;border-radius:inherit;background-size:cover;background-position:center;}
+.command-grid .command-card:after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.08),rgba(0,0,0,.72)),linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.56));}
+.command-grid .command-card > *{z-index:2;}
+@media(max-width:720px){
+  .command-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .command-grid .command-card,.command-grid .command-card.hero-command{width:100%;height:auto;min-height:0;aspect-ratio:1 / 1;padding:16px;border-radius:15px;}
+}
+@media(max-width:360px){
+  .command-grid{gap:8px;}
+  .command-grid .command-card,.command-grid .command-card.hero-command{aspect-ratio:1 / 1;padding:13px;border-radius:14px;}
+}
