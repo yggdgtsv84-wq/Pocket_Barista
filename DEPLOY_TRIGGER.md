@@ -4,3 +4,4 @@ This file triggers the GitHub Pages deployment after Supabase repository secrets
 
 <!-- mobile card layout deployment refresh -->
 <!-- final compact portrait layout -->
+<!-- final card image fit -->
