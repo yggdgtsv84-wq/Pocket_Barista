@@ -15,6 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Inspect guide timer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('src/main.js').read_text()
+          for needle in ['function renderGuide','state.guide.elapsed','setInterval']:
+              i=s.find(needle)
+              print(f'--- {needle} @ {i} ---')
+              print(s[max(0,i-700):i+1800] if i >= 0 else 'NOT FOUND')
+          PY
       - name: Repair AeroPress recipe markup
         run: sed -i 's/data-method-brew="${kind}"/data-method-brew="${kind}" data-method="${kind}"/' src/main.js
       - uses: actions/setup-node@v4
