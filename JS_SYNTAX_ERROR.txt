@@ -1,0 +1,8 @@
+/home/runner/work/Pocket_Barista/Pocket_Barista/src/main.js:74
+function pourPage(){return `<section class="page-head"><button class="back-btn" data-page="home">← Dashboard</button><div class="eyebrow">METHOD 01 / POUR OVER</div><h1>Dial in the pour.</h1><p>Choose a proven recipe. Pocket Barista becomes your brewing co-pilot.</p></section>
+                                     ^^^^^
+
+SyntaxError: Unexpected token 'class'
+    at checkSyntax (node:internal/main/check_syntax:74:5)
+
+Node.js v22.23.2
