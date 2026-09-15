@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,23 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply AeroPress and V60 Switch options
-        run: python scripts/add_brewer_options.py
-      - name: Validate generated JavaScript
-        run: |
-          set +e
-          node --check src/main.js 2> /tmp/js-error.txt
-          status=$?
-          if [ "$status" -ne 0 ]; then
-            cat /tmp/js-error.txt
-            cp /tmp/js-error.txt JS_SYNTAX_ERROR.txt
-            git config user.name "Pocket Barista Bot"
-            git config user.email "actions@github.com"
-            git add JS_SYNTAX_ERROR.txt
-            git commit -m "Capture generated JS syntax error" || true
-            git push || true
-            exit "$status"
-          fi
       - uses: actions/setup-node@v4
         with:
           node-version: 22
