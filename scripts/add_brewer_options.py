@@ -35,17 +35,13 @@ function startMethodRecipe(kind,id){
  renderGuide();
 }
 '''
-if marker not in s: raise SystemExit('state marker not found')
-s=s.replace(marker,insert+marker,1)
-old_render="${state.page==='home'?homePage():state.page==='pour'?pourPage():espressoPage()}"
-new_render="${state.page==='home'?homePage():state.page==='pour'?pourPage():state.page==='aero'?aeroPage():state.page==='switch'?switchPage():espressoPage()}"
-if old_render not in s: raise SystemExit('render routing marker not found')
-s=s.replace(old_render,new_render,1)
-home=re.compile(r'function homePage\(\)\{.*?\n\nfunction pourPage\(\)',re.S)
-replacement="""function homePage(){return `<section class=\"dashboard-head\"><div><h1>Good coffee.<br><em>Precisely made.</em></h1></div><div class=\"status-chip\"><i></i> SYSTEM READY</div></section>\n<section class=\"command-grid\">\n <button class=\"command-card hero-command\" data-page=\"pour\"><div class=\"command-icon pour-icon\">◒</div><div class=\"command-copy\"><h2>Pour Over</h2></div><b>→</b></button>\n <button class=\"command-card\" data-page=\"espresso\"><div class=\"command-icon\">◉</div><div class=\"command-copy\"><h2>Espresso</h2></div><b>→</b></button>\n <button class=\"command-card method-command aero-command\" data-page=\"aero\"><div class=\"command-copy\"><h2>AeroPress</h2></div><b>→</b></button>\n <button class=\"command-card method-command switch-command\" data-page=\"switch\"><div class=\"command-copy\"><h2>V60 Switch</h2></div><b>→</b></button>\n</section>}\n\nfunction pourPage("""
-s,count=home.subn(replacement,s,count=1)
-if count!=1: raise SystemExit('homePage regex failed')
-needle=' bind();\n}'
-if needle not in s: raise SystemExit('render bind marker not found')
-s=s.replace(needle,' bind();bindMethodCards();\n}',1)
-p.write_text(s)
+replacement = """function homePage(){return `<section class="dashboard-head"><div><h1>Good coffee.<br><em>Precisely made.</em></h1></div><div class="status-chip"><i></i> SYSTEM READY</div></section>
+<section class="command-grid">
+ <button class="command-card hero-command" data-page="pour"><div class="command-icon pour-icon">◒</div><div class="command-copy"><h2>Pour Over</h2></div><b>→</b></button>
+ <button class="command-card" data-page="espresso"><div class="command-icon">◉</div><div class="command-copy"><h2>Espresso</h2></div><b>→</b></button>
+ <button class="command-card method-command aero-command" data-page="aero"><div class="command-copy"><h2>AeroPress</h2></div><b>→</b></button>
+ <button class="command-card method-command switch-command" data-page="switch"><div class="command-copy"><h2>V60 Switch</h2></div><b>→</b></button>
+</section>}
+
+function pourPage()"""
+print("replacement ending:
