@@ -1,7 +1,8 @@
 /* Home command cards: true square tiles. */
 .command-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
 .command-grid .command-card,.command-grid .command-card.hero-command{width:100%;height:auto;min-height:0;aspect-ratio:1 / 1;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
-.command-grid .command-card:before{inset:0;right:auto;top:auto;width:auto;height:auto;border-radius:inherit;background-size:cover;}
+.command-grid .command-card:before{inset:0;right:auto;top:auto;width:auto;height:auto;border-radius:inherit;background-size:contain;background-position:center;background-repeat:no-repeat;}
+.command-grid .command-card[data-page="aero"]:before,.command-grid .command-card[data-page="switch"]:before{background-size:contain;background-position:center;background-repeat:no-repeat;}
 .command-grid .command-card > *{z-index:2;}
 .command-grid .command-copy{position:absolute;left:50%;right:auto;top:50%;transform:translate(-50%,-50%);width:82%;display:flex;flex-direction:column;align-items:center;text-align:center;}
 .command-grid .command-copy h2{margin:0;font-size:clamp(18px,2vw,28px);line-height:1.05;text-align:center;}
