@@ -49,3 +49,5 @@ jobs:
           git add .github/workflows/add-champions.yml
           git commit -m "Remove temporary recipe workflow"
           git push
+
+# Trigger the existing workflow now that it is established on main.
