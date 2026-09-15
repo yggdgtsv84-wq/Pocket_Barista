@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,56 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Repair AeroPress recipe markup
+        run: sed -i 's/data-method-brew="${kind}"/data-method-brew="${kind}" data-method="${kind}"/' src/main.js
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-      - name: Repair AeroPress handler in source
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('src/main.js')
-          s = p.read_text()
-          old = '''function bindMethodCards(){
- document.querySelectorAll('[data-method-brew]').forEach(btn=>{
-  if(btn.dataset.method==='aero')return;
-  btn.addEventListener('click',e=>{
-   e.preventDefault();
-   e.stopPropagation();
-   const card=btn.closest('[data-recipe-card]');
-   const scale=Number(card?.querySelector('.method-scale input')?.value||1);
-   startMethodRecipe(btn.dataset.method,btn.dataset.recipeId,scale);
-  });
- });
-}
-document.addEventListener('click',e=>{
- const btn=e.target.closest('[data-method-brew][data-method="aero"]');
- if(!btn)return;
- e.preventDefault();
- e.stopImmediatePropagation();
- const card=btn.closest('[data-recipe-card]');
- const scale=Number(card?.querySelector('.method-scale input')?.value||1);
- startMethodRecipe('aero',btn.dataset.recipeId,scale);
-},true);'''
-          new = '''function bindMethodCards(){
- document.querySelectorAll('[data-method-brew]').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-   e.preventDefault();
-   e.stopPropagation();
-   const card=btn.closest('[data-recipe-card]');
-   const kind=btn.dataset.methodBrew;
-   const scale=Number(card?.querySelector('.method-scale input')?.value||1);
-   startMethodRecipe(kind,btn.dataset.recipeId,scale);
-  });
- });
-}'''
-          if old in s:
-              p.write_text(s.replace(old,new,1))
-              print('AeroPress handler repaired.')
-          elif 'const kind=btn.dataset.methodBrew;' in s and "data-method-brew=\"${kind}\"" in s:
-              print('AeroPress handler already repaired.')
-          else:
-              raise SystemExit('AeroPress handler did not match expected source.')
-          PY
-          npm install
+          node-version: 22
+      - run: npm install
       - run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
