@@ -63,8 +63,9 @@ async function saveEntry(entry){
 async function removeEntry(id){if(!confirm('Delete this journal entry?'))return;entries=entries.filter(x=>x.id!==id);persistLocal();if(supabase&&user&&cloudAvailable)await supabase.from('coffee_journal').delete().eq('id',id);render()}
 function closeJournal(){document.querySelector('#journalView')?.remove()}
 function addMenuItem(){const drawer=document.querySelector('.drawer');if(!drawer||drawer.querySelector('#drawerJournal'))return;const label=[...drawer.querySelectorAll('.drawer-label')].find(x=>x.textContent.trim()==='LIBRARY');const btn=document.createElement('button');btn.className='drawer-item';btn.id='drawerJournal';btn.innerHTML='<b>05</b><span>Coffee Journal</span><i>→</i>';if(label)label.insertAdjacentElement('afterend',btn);else drawer.appendChild(btn);btn.onclick=()=>{closeMenuCompat();openJournal()}}
+function addHomeCard(){const grid=document.querySelector('.command-grid');if(!grid||grid.querySelector('#journalHomeCard'))return;const card=document.createElement('button');card.type='button';card.className='command-card journal-command';card.id='journalHomeCard';card.setAttribute('aria-label','Open Coffee Journal');card.innerHTML='<div class="command-copy"><h2>Coffee Journal</h2></div><b>→</b>';grid.appendChild(card);card.onclick=openJournal}
 function closeMenuCompat(){document.querySelector('#modal').innerHTML=''}
 function openJournal(){closeJournal();render()}
-function watchMenu(){addMenuItem();new MutationObserver(addMenuItem).observe(document.body,{childList:true,subtree:true})}
+function watchMenu(){addMenuItem();addHomeCard();new MutationObserver(()=>{addMenuItem();addHomeCard()}).observe(document.body,{childList:true,subtree:true})}
 
 (async()=>{if(supabase){const {data}=await supabase.auth.getSession();user=data.session?.user||null;cloudAvailable=!!user&&await loadCloud();supabase.auth.onAuthStateChange(async(_,session)=>{user=session?.user||null;if(user)await loadCloud();else cloudAvailable=false})}watchMenu()})();
