@@ -22,14 +22,31 @@
 .recipes-library-shell{min-height:100vh;}
 .recipes-dashboard-link{color:inherit;text-decoration:none;opacity:.8;white-space:nowrap;}
 .recipes-library{max-width:900px;margin:0 auto;padding:18px 20px 100px;}
+.recipe-entry{margin-top:26px;}
+.recipe-entry-head h2{margin:.35rem 0 .35rem;}
+.recipe-entry-head p{margin:0;opacity:.72;}
+.recipe-entry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px;}
+.recipe-entry-grid label{display:flex;flex-direction:column;gap:7px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;}
+.recipe-entry-grid input,.recipe-entry-grid select,.recipe-entry-grid textarea{box-sizing:border-box;width:100%;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.04);color:inherit;padding:12px 13px;font:inherit;letter-spacing:normal;text-transform:none;outline:none;}
+.recipe-entry-grid input:focus,.recipe-entry-grid select:focus,.recipe-entry-grid textarea:focus{border-color:rgba(255,255,255,.34);}
+.recipe-entry-grid select option{background:#111;color:#fff;}
+.recipe-entry-wide{grid-column:1 / -1;}
+.recipe-entry-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-top:18px;}
+.recipe-entry-actions #recipeEntryStatus{margin-right:auto;font-size:.82rem;opacity:.65;}
+.recipe-entry-actions button:disabled{opacity:.55;cursor:wait;}
 .recipes-list{display:grid;gap:14px;margin-top:30px;}
 .recipes-list .recipe{display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.recipe-notes{margin-top:8px;opacity:.7;font-size:.9rem;}
 .recipes-action{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;margin-top:14px;}
 
 @media(max-width:720px){
   .command-grid .recipes-command{grid-column:1 / -1;aspect-ratio:2 / 1;}
   .recipes-library{padding-left:16px;padding-right:16px;}
   .recipes-library-shell .topbar{padding-left:16px;padding-right:16px;}
+  .recipe-entry-grid{grid-template-columns:1fr;}
+  .recipe-entry-wide{grid-column:auto;}
+  .recipe-entry-actions{align-items:stretch;flex-direction:column;}
+  .recipe-entry-actions #recipeEntryStatus{margin-right:0;}
 }
 @media(max-width:360px){
   .command-grid .recipes-command{grid-column:1 / -1;aspect-ratio:2 / 1;}
