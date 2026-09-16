@@ -1,0 +1,11 @@
+/* My Recipes uses the same full-width dimensions as Coffee Journal. */
+.command-grid .recipes-command{
+  grid-column:1 / -1;
+  aspect-ratio:2 / 1;
+}
+@media(max-width:720px){
+  .command-grid .recipes-command{grid-column:1 / -1;aspect-ratio:2 / 1;}
+}
+@media(max-width:360px){
+  .command-grid .recipes-command{grid-column:1 / -1;aspect-ratio:2 / 1;}
+}
