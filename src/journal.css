@@ -2,3 +2,7 @@
 .journal-command{grid-column:1/-1!important;aspect-ratio:auto!important;overflow:hidden}.journal-command:before{background-image:url('../assets/journal-beans.webp?v=3');background-position:center center;background-size:cover;background-repeat:no-repeat;filter:none!important;opacity:1}.journal-command:after{background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.24) 45%,rgba(0,0,0,.62) 100%),linear-gradient(180deg,rgba(0,0,0,.02) 20%,rgba(0,0,0,.38) 100%)}.journal-command:hover:before{filter:none!important}
 @media(max-width:720px){.journal-backdrop{padding:0 12px 100px}.journal-head{padding:42px 4px 28px;align-items:flex-start}.journal-head h1{font-size:clamp(44px,12vw,62px)}.journal-head p{font-size:12px}.journal-head .close{margin-top:0}.journal-card{padding:16px;border-radius:20px;display:grid;grid-template-columns:1fr;gap:0}.journal-card-top{grid-column:1}.journal-card h2{font-size:24px}.journal-grid{grid-template-columns:1fr}.journal-editor{padding:20px;border-radius:20px}.journal-editor .actions{position:sticky;bottom:0;background:#101010;padding-top:12px}.journal-facts{gap:0}.journal-facts span{font-size:7px;margin-right:12px;padding-right:12px}.journal-command{height:clamp(122px,18vh,158px)!important}.journal-command .command-copy{top:50%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Remove the fixed shortcut bar and reclaim the bottom page space. */
+body{padding-bottom:0!important}
+.bottom-nav{display:none!important}
