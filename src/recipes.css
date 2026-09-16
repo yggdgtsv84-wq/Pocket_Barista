@@ -3,6 +3,15 @@
   grid-column:1 / -1;
   aspect-ratio:2 / 1;
 }
+
+/* Dark, moody coffee photography from Unsplash. */
+.command-grid .recipes-command:before{
+  background-image:url('https://images.unsplash.com/photo-1652507733698-b0c536a92cd4?auto=format&fit=crop&fm=jpg&q=82&w=1800');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
 @media(max-width:720px){
   .command-grid .recipes-command{grid-column:1 / -1;aspect-ratio:2 / 1;}
 }
