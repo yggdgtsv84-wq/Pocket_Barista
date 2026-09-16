@@ -1,0 +1,23 @@
+{
+  "name": "A Minor Inconvenience — Pocket Barista",
+  "short_name": "Pocket Barista",
+  "start_url": "/Pocket_Barista/",
+  "scope": "/Pocket_Barista/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "description": "A premium coffee recipe book, brew calculator and timer.",
+  "icons": [
+    {
+      "src": "/Pocket_Barista/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Pocket_Barista/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
