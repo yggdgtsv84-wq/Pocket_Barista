@@ -58,14 +58,22 @@ async function renderRecipesPage(){
   </div>`;
 }
 
+function isRecipesRoute(){
+  return new URLSearchParams(window.location.search).get('page')==='recipes';
+}
+
 function watchHome(){
   addHomeCard();
   wireMenuLink();
-  new MutationObserver(()=>{
+  const observer=new MutationObserver(()=>{
     addHomeCard();
     wireMenuLink();
-  }).observe(document.body,{childList:true,subtree:true});
-  if(new URLSearchParams(window.location.search).get('page')==='recipes')setTimeout(renderRecipesPage,0);
+    if(isRecipesRoute() && !document.querySelector('.recipes-library-shell')){
+      renderRecipesPage();
+    }
+  });
+  observer.observe(document.body,{childList:true,subtree:true});
+  if(isRecipesRoute())setTimeout(renderRecipesPage,0);
 }
 
 watchHome();
