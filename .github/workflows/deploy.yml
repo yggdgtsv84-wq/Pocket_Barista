@@ -27,7 +27,7 @@ jobs:
             ('Your private coffee book', 'Your private recipes'),
             ('<p>Save a curated method or custom brew.</p>', '<p>Create and save your own recipes here.</p>'),
             ("toast('Recipe saved ✓')", "toast('Recipe saved to My Recipes ✓')"),
-            ("state.recipes=data||[];render()", "state.recipes=(data||[]).filter(r=>!String(r.notes||'').startsWith('Inspired by '));render()"),
+            ("state.recipes=data||[];render()", "state.recipes=(data||[]).filter(r=>r.user_id===state.user.id&&!String(r.notes||'').startsWith('Inspired by '));render()"),
             ("async function saveBuilt(id){if(!state.user)return openAuth();const r=R.find(x=>x.id===id);if(!r)return;const {error}=await supabase.from('recipes').insert({user_id:state.user.id,name:r.name,method:r.method,coffee_g:r.coffee_g,water_g:r.water_g,ratio:r.ratio,grind:r.grind,temperature_c:r.temperature_c,brew_seconds:r.brew_seconds,notes:`Inspired by ${r.creator}. ${r.notes}`,rating:0});if(error)return toast(error.message);toast('Added to your coffee book ✓');await loadRecipes()}", "function saveBuilt(id){const r=R.find(x=>x.id===id);if(!r)return;if(!state.user)return openAuth();useBuilt(r);toast('Recipe loaded as a starting point — save your version to My Recipes.')}")
           ]
           for old,new in replacements:
@@ -35,7 +35,7 @@ jobs:
                   raise SystemExit(f'Expected pattern not found: {old[:100]}')
               s=s.replace(old,new,1)
           p.write_text(s)
-          print('My Recipes configured: custom saves only; curated recipes are excluded from the personal library.')
+          print('My Recipes configured: only user-owned custom saves are shown; curated recipes are excluded.')
           PY
       - name: Repair guided brew warnings
         run: |
