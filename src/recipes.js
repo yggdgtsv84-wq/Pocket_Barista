@@ -22,6 +22,16 @@ function addHomeCard(){
   journal.insertAdjacentElement('afterend',card);
 }
 
+function wireMenuLink(){
+  const menuItem=document.querySelector('#drawerSaved');
+  if(!menuItem)return;
+  menuItem.onclick=event=>{
+    event.preventDefault();
+    event.stopPropagation();
+    window.location.href=RECIPES_ROUTE;
+  };
+}
+
 async function renderRecipesPage(){
   const app=document.querySelector('#app');
   if(!app)return;
@@ -50,7 +60,11 @@ async function renderRecipesPage(){
 
 function watchHome(){
   addHomeCard();
-  new MutationObserver(addHomeCard).observe(document.body,{childList:true,subtree:true});
+  wireMenuLink();
+  new MutationObserver(()=>{
+    addHomeCard();
+    wireMenuLink();
+  }).observe(document.body,{childList:true,subtree:true});
   if(new URLSearchParams(window.location.search).get('page')==='recipes')setTimeout(renderRecipesPage,0);
 }
 
