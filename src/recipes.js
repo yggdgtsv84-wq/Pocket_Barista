@@ -1,7 +1,7 @@
 import './recipes.css';
 
-const RECIPES_PAGE = '/Pocket_Barista/my-recipes.html';
-const RECIPE_IMAGE = 'https://images.unsplash.com/photo-1652507733698-b0c536a92cd4?auto=format&fit=crop&fm=jpg&q=82&w=1800';
+const RECIPES_PAGE = 'my-recipes.html';
+const RECIPE_IMAGE = 'https://images.pexels.com/photos/4017487/pexels-photo-4017487.jpeg?cs=srgb&fm=jpg&w=1800';
 
 function addHomeCard(){
   const journal=document.querySelector('#journalHomeCard');
@@ -12,7 +12,7 @@ function addHomeCard(){
   card.id='recipesHomeCard';
   card.href=RECIPES_PAGE;
   card.setAttribute('aria-label','Open My Recipes');
-  card.innerHTML=`<img class="recipes-card-image" src="${RECIPE_IMAGE}" alt="Dark coffee cup surrounded by roasted coffee beans"><div class="command-copy"><h2>My Recipes</h2></div><b>→</b>`;
+  card.innerHTML=`<img class="recipes-card-image" src="${RECIPE_IMAGE}" alt="Dark, moody coffee mug surrounded by roasted coffee beans"><div class="command-copy"><h2>My Recipes</h2></div><b>→</b>`;
   journal.insertAdjacentElement('afterend',card);
 }
 
